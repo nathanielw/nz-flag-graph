@@ -1,0 +1,108 @@
+{
+	"choices" : [
+		 {
+			"key" : "fb",
+			"name" : "Silver Fern (Black, White and Blue)",
+			"img" : ""
+		},
+		 {
+			"key" : "fr",
+			"name" : "Silver Fern (Red, White and Blue) ",
+			"img" : ""
+		},
+		 {
+			"key" : "rp",
+			"name" : "Red Peak",
+			"img" : ""
+		},
+		 {
+			"key" : "bw",
+			"name" : "Silver Fern (Black and White)",
+			"img" : ""
+		},
+		 {
+			"key" : "kr",
+			"name" : "Koru",
+			"img" : ""
+		}
+	],
+
+	"counts" : [
+		{
+			"name" : "Count 1",
+			"totals" : [
+				{
+					"key" : "fb",
+					"votes" : 552827
+				},
+				{
+					"key" : "fr",
+					"votes" : 574364
+				},
+				{
+					"key" : "rp",
+					"votes" : 119672
+				},
+				{
+					"key" : "bw",
+					"votes" : 77802
+				},
+				{
+					"key" : "kr",
+					"votes" : 51879
+				}
+			]
+		},
+		{
+			"name" : "Count 2",
+			"totals" : [
+				{
+					"key" : "fb",
+					"votes" : 557812
+				},
+				{
+					"key" : "fr",
+					"votes" : 578506
+				},
+				{
+					"key" : "rp",
+					"votes" : 131865
+				},
+				{
+					"key" : "bw",
+					"votes" : 97164
+				}
+			]
+		},
+		{
+			"name" : "Count 3",
+			"totals" : [
+				{
+					"key" : "fb",
+					"votes" : 605654
+				},
+				{
+					"key" : "fr",
+					"votes" : 600811
+				},
+				{
+					"key" : "rp",
+					"votes" : 146358
+				}
+			]
+		},
+		{
+			"name" : "Count 4",
+			"totals" :[
+				{
+					"key" : "fb",
+					"votes" : 662160
+				},
+				{
+					"key" : "fr",
+					"votes" : 648295
+				}
+			]
+		}
+	]
+}

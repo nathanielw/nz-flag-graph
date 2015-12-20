@@ -1,0 +1,17 @@
+{
+    "extends": "eslint:recommended",
+
+    "env": {
+        "browser": true
+    },
+
+    "rules": {
+        "curly": 2,
+        "no-alert": 2,
+        "brace-style": [2,"1tbs",{"allowSingleLine":true}],
+        "camelcase": [2,{"properties":"always"}],
+        "indent": [2,"tab"],
+        "no-trailing-spaces": [2,{"skipBlankLines":true}],
+        "quotes": [2,"single"]
+    }
+}
