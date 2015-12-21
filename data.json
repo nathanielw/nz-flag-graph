@@ -24,6 +24,16 @@
 			"key" : "kr",
 			"name" : "Koru",
 			"img" : ""
+		},
+		 {
+			"key" : "inf",
+			"name" : "Informal Votes",
+			"img" : ""
+		},
+		 {
+			"key" : "inv",
+			"name" : "Invalid Votes",
+			"img" : ""
 		}
 	],
 
@@ -50,6 +60,14 @@
 				{
 					"key" : "kr",
 					"votes" : 51879
+				},
+				{
+					"key" : "inf",
+					"votes" : 149747
+				},
+				{
+					"key" : "inv",
+					"votes" : 3372
 				}
 			]
 		},
@@ -71,6 +89,14 @@
 				{
 					"key" : "bw",
 					"votes" : 97164
+				},
+				{
+					"key" : "inf",
+					"votes" : 149747
+				},
+				{
+					"key" : "inv",
+					"votes" : 3372
 				}
 			]
 		},
@@ -88,6 +114,14 @@
 				{
 					"key" : "rp",
 					"votes" : 146358
+				},
+				{
+					"key" : "inf",
+					"votes" : 149747
+				},
+				{
+					"key" : "inv",
+					"votes" : 3372
 				}
 			]
 		},
@@ -101,6 +135,14 @@
 				{
 					"key" : "fr",
 					"votes" : 648295
+				},
+				{
+					"key" : "inf",
+					"votes" : 149747
+				},
+				{
+					"key" : "inv",
+					"votes" : 3372
 				}
 			]
 		}
