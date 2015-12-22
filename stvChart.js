@@ -2,23 +2,23 @@
 /* global stvChart d3  */
 
 function stvChart() {
-	var width = 800,
-		height = 600,
+	var height = 800,
+		width = 600,
 		nodeSizeRatio = 0.2,
 		counts = [],
 		flows = [];
 
 	function chart() {}
 
-	chart.width = function(val) {
-		if (!arguments.length) { return width }
-		width = val;
-		return chart;
-	}
-
 	chart.height = function(val) {
 		if (!arguments.length) { return height }
 		height = val;
+		return chart;
+	}
+
+	chart.width = function(val) {
+		if (!arguments.length) { return width }
+		width = val;
 		return chart;
 	}
 
@@ -39,37 +39,37 @@ function stvChart() {
 	}
 
 	chart.layout = function() {
-		var xScale = d3.scale.ordinal()
+		var yScale = d3.scale.ordinal()
 			.domain(counts.map(function(d) { return d.name }))
-			.rangeBands([0, width], 1 - nodeSizeRatio, 0);
+			.rangeBands([0, height], 1 - nodeSizeRatio, 0);
 
-		var yScale = d3.scale.linear()
+		var xScale = d3.scale.linear()
 			.domain([0, d3.sum(counts[0].totals.values(), function(d) { return d.votes })])
-			.range([0, height]);
+			.range([0, width]);
 
-		computeNodeGeometry(xScale, yScale);
+		computeNodeGeometry(yScale, xScale);
 
 		return chart;
 	}
 
-	function computeNodeGeometry(xScale, yScale) {
+	function computeNodeGeometry(yScale, xScale) {
 		counts.forEach(function(count, i) {
-			var x = xScale(count.name);
-			var dx = xScale.rangeBand(count.name);
+			var y = yScale(count.name);
+			var dy = yScale.rangeBand(count.name);
 
-			var yAcummulated = 0;
+			var xAcummulated = 0;
 
 			// Add geometry data to each candidate in this count/round
 			count.totals.forEach(function(k, v) {
 				v.geo = {
-					x: x,
-					dx: dx,
+					y: y,
+					dy: dy,
 
-					y: yScale(yAcummulated),
-					dy: yScale(v.votes)
+					x: xScale(xAcummulated),
+					dx: xScale(v.votes)
 				}
 
-				yAcummulated += v.votes;
+				xAcummulated += v.votes;
 			});
 
 			// Add flows going from each candidate in the current count back to the previous count.
@@ -92,10 +92,10 @@ function stvChart() {
 					var prevTotal = prevCount.totals.get(k);
 					var newVotes = v.votes - prevTotal.votes;
 
-					flows.push(new Flow(prevTotal.votes, yScale, 0, 0, prevTotal, v));
+					flows.push(new Flow(prevTotal.votes, xScale, 0, 0, prevTotal, v));
 
 					if (newVotes > 0) {
-						flows.push(new Flow(newVotes, yScale, prevTotal.votes, elimVoteOffset, eliminated, v));
+						flows.push(new Flow(newVotes, xScale, prevTotal.votes, elimVoteOffset, eliminated, v));
 						elimVoteOffset += newVotes;
 					}
 				});
@@ -103,18 +103,18 @@ function stvChart() {
 		});
 	}
 
-	function Flow(votes, yScale, fromVoteOffset, toVoteOffset,  from, to) {
-		var width = yScale(votes);
+	function Flow(votes, xScale, fromVoteOffset, toVoteOffset,  from, to) {
+		var width = xScale(votes);
 
 		this.from = from;
 		this.to = to;
 		this.votes = votes;
 
 		this.geo = {
-			x0: from.geo.x + from.geo.dx,
-			x1: to.geo.x,
-			y0: from.geo.y + (width / 2) + yScale(toVoteOffset),
-			y1: to.geo.y + (width / 2) + yScale(fromVoteOffset),
+			y0: from.geo.y + from.geo.dy,
+			y1: to.geo.y,
+			x0: from.geo.x + (width / 2) + xScale(toVoteOffset),
+			x1: to.geo.x + (width / 2) + xScale(fromVoteOffset),
 			width: width
 		}
 	}

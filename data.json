@@ -34,6 +34,11 @@
 			"key" : "inv",
 			"name" : "Invalid Votes",
 			"img" : ""
+		},
+		 {
+			"key" : "nt",
+			"name" : "Non-transferable Votes",
+			"img" : ""
 		}
 	],
 
@@ -68,6 +73,10 @@
 				{
 					"key" : "inv",
 					"votes" : 3372
+				},
+				{
+					"key" : "nt",
+					"votes" : 0
 				}
 			]
 		},
@@ -97,6 +106,10 @@
 				{
 					"key" : "inv",
 					"votes" : 3372
+				},
+				{
+					"key" : "nt",
+					"votes" : 11357
 				}
 			]
 		},
@@ -122,6 +135,10 @@
 				{
 					"key" : "inv",
 					"votes" : 3372
+				},
+				{
+					"key" : "nt",
+					"votes" : 24065
 				}
 			]
 		},
@@ -143,6 +160,10 @@
 				{
 					"key" : "inv",
 					"votes" : 3372
+				},
+				{
+					"key" : "nt",
+					"votes" : 67359
 				}
 			]
 		}

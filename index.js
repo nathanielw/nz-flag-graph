@@ -11,7 +11,7 @@ function ready(fn) {
 ready(function() {
 	var margin = {top: 0, right: 0, bottom: 0, left: 0},
 		width = 800 - margin.left - margin.right,
-		height = 600 - margin.top - margin.bottom;
+		height = 800 - margin.top - margin.bottom;
 
 	var chartElement = d3.select('#chart').append('svg')
 		.attr('width', width + margin.left + margin.right)
@@ -29,6 +29,7 @@ ready(function() {
 			var chart = stvChart()
 				.width(width)
 				.height(height)
+				.nodeSizeRatio(0.15)
 				.counts(json.counts)
 				.layout();
 
@@ -63,14 +64,14 @@ ready(function() {
 				.append('path')
 				.attr('class', 'flow')
 				.attr('d', function(d) {
-					var dist = d.geo.x1 - d.geo.x0;
+					var dist = d.geo.y1 - d.geo.y0;
 
 					return 'M' +  d.geo.x0 + ',' + d.geo.y0
-						+ ' C' + (d.geo.x0 + dist/2) + ',' + d.geo.y0
-						+ ' ' + (d.geo.x1 - dist/2) + ',' + d.geo.y1
+						+ ' C' + d.geo.x0 + ',' + (d.geo.y0 + dist/2)
+						+ ' ' + d.geo.x1 + ',' + (d.geo.y1 - dist/2)
 						+ ' ' + d.geo.x1 + ',' + d.geo.y1;
 				})
-				.style('stroke', '#333')
+				.style('stroke', function(d) { return colors(d.from.key) })
 				.style('stroke-width', function(d) { return d.geo.width })
 				.style('opacity', '0.2')
 				.style('fill', 'none');
