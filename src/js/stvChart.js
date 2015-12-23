@@ -1,5 +1,6 @@
-/* exported stvChart */
-/* global stvChart d3  */
+module.exports = stvChart;
+
+var d3 = require('d3');
 
 function stvChart() {
 	var height = 800,
