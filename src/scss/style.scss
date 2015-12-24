@@ -1,3 +1,7 @@
-body {
-	background: white;
-}
+@import 'normalize.css/normalize';
+@import 'core/_variables';
+@import 'core/_layout';
+@import 'core/_typography';
+
+@import 'modules/_header';
+@import 'modules/_flag-drop';

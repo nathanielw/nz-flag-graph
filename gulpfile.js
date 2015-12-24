@@ -22,8 +22,6 @@ var customBundleOpts = {
 	debug: true
 };
 
-gulp.task('build', ['bundle:dist', 'html', 'css:dist']);
-
 gulp.task('browserify', function () {
 	var bundler = browserify('./src/js/index.js');
 
@@ -58,7 +56,7 @@ gulp.task('watchify', function() {
 
 gulp.task('css', function() {
 	return gulp.src('src/scss/*.scss')
-		.pipe(sass())
+		.pipe(sass({includePaths: ['./node_modules/'] }))
 		.on('error', gutil.log.bind(gutil, 'Sass Error'))
 		.pipe(gulp.dest(opts.dest + '/css'))
 		.pipe(browserSync.reload({stream: true}));
@@ -66,11 +64,16 @@ gulp.task('css', function() {
 
 gulp.task('html', function() {
 	return gulp.src('src/*.html')
-	.pipe(gulp.dest('dist'));
+	.pipe(gulp.dest(opts.dest));
+});
+
+gulp.task('resources', function() {
+	return gulp.src('src/resources/**/*')
+	.pipe(gulp.dest(opts.dest + '/resources'));
 });
 
 gulp.task('clean', function() {
-	del.sync(opts.dist + '/**/*');
+	del.sync(opts.dest + '/**/*');
 });
 
 gulp.task('serve', ['watchify', 'css'], function () {
@@ -79,6 +82,8 @@ gulp.task('serve', ['watchify', 'css'], function () {
 		server: ['./src', opts.dest]
 	});
 
-	gulp.watch('src/scss/**/*.scss', ['css']);
+	gulp.watch('src/scss/**/*', ['css']);
 	gulp.watch('src/**/*.html', browserSync.reload);
 });
+
+gulp.task('build', ['browserify', 'html', 'css', 'resources']);

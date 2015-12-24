@@ -1,0 +1,54 @@
+@import '../core/_variables';
+
+.flag-drop {
+	&__ordered {
+		padding: $margin 0;
+		border: 3px dashed $col-grey-light;
+	}
+
+	&__caption {
+		text-align: center;
+		line-height: 1;
+		color: $col-grey-light;
+
+		p {
+			margin: 0;
+		}
+	}
+
+	&__unordered {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		padding: $margin 0;
+	}
+
+	&__flag {
+		margin: 10px;
+		text-align: center;
+	}
+
+	&__flag-img {
+		line-height: 0;
+
+		img {
+			height: 50px;
+
+			@media (min-width: $break-s) {
+				height: auto;
+			}
+		}
+	}
+
+	&__flag-name {
+		margin-top: 1em;
+		line-height: 1;
+		text-transform: uppercase;
+		color: $col-grey-dark;
+	}
+
+	.heading {
+		margin-bottom: 0.2em;
+	}
+}

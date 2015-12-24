@@ -2,16 +2,74 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>NZ Flag Referendum Interactive Graph</title>
+		<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="./css/style.css" />
 		<script src="./js/bundle.js"></script>
 	</head>
 	<body>
-		<h1>NZ Flag Referendum Interactive Graph</h1>
+		<header class="header">
+			<div class="content">
+				<h1 class="heading heading--page">
+					<span class="heading__main">NZ Flag Referendum</span>
+					<br>
+					<span class="heading__sub">Interactive Graph</span>
+				</h1>
+			</div>
+			<a href="https://github.com/nathanielw" title="Page source on Github">
+				<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 250 250" style="position:absolute;top:0;right:0"><path d="M0 0l115.002 115.002h5l6.792-6.793C113.406 99.424 119 90 119 90c3-7 2.002-11.004 2.002-11.004-1-7 2.997-1.996 2.997-1.996 4 5 2 10.998 2 10.998-2.387 7.96 2.18 12.71 6.166 14.838l1.837-1.837c3-2 5.995-3.002 7.995-3.002C133.998 86.998 127 74 144 57c5-5 9.998-7 15.998-7 1-2 3-7 12-11 0 0 5 3 7 16 4 2 8 5 12 9S198 72 200 76c14 3 16.998 7.002 16.998 7.002C212.998 91.002 208 94 206 94c0 6-2 10.998-7 15.998C183 125.998 169 120 158 112c0 3-1 6.998-5 10.998l-12.005 11.005c-1 1 1 4.998 1 4.998l-2.202-1.958 2.203 4.956L250 250V0H0z" fill="#fff"/></svg>
+			</a>
+		</header>
 
-		<div id="chart">
-
+		<div class="content">
+			<div class="panel flag-drop">
+				<div class="flag-drop__ordered">
+					<div class="flag-drop__caption">
+						<h2 class="heading">
+							Drag flags here
+						</h2>
+						<p class="heading heading--3">
+							Rank the flags to see where your vote went
+						</p>
+					</div>
+				</div>
+				<div class="flag-drop__unordered">
+					<div class="flag-drop__flag">
+						<div class="flag-drop__flag-img">
+							<img src="./resources/img/flags/red-peak.png">
+						</div>
+						<div class="flag-drop__flag-name">Red Peak</div>
+					</div>
+					<div class="flag-drop__flag">
+						<div class="flag-drop__flag-img">
+							<img src="./resources/img/flags/fern-bw.png">
+						</div>
+						<div class="flag-drop__flag-name">Fern 1</div>
+					</div>
+					<div class="flag-drop__flag">
+						<div class="flag-drop__flag-img">
+							<img src="./resources/img/flags/fern-bb.png">
+						</div>
+						<div class="flag-drop__flag-name">Fern 2</div>
+					</div>
+					<div class="flag-drop__flag">
+						<div class="flag-drop__flag-img">
+							<img src="./resources/img/flags/fern-rb.png">
+						</div>
+						<div class="flag-drop__flag-name">Fern 3</div>
+					</div>
+					<div class="flag-drop__flag">
+						<div class="flag-drop__flag-img">
+							<img src="./resources/img/flags/koru.png">
+						</div>
+						<div class="flag-drop__flag-name">Koru</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel">
+				<div id="chart"></div>
+			</div>
 		</div>
-
 	</body>
 </html>
