@@ -11,6 +11,7 @@
     "gulp-util": "^3.0.7",
     "lodash.assign": "^3.2.0",
     "normalize.css": "^3.0.3",
+    "sortablejs": "^1.4.2",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.6.1"
