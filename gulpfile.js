@@ -3,6 +3,7 @@
 var watchify = require('watchify');
 var browserSync = require('browser-sync');
 var browserify = require('browserify');
+var babel = require('babelify');
 var gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
@@ -22,10 +23,15 @@ var customBundleOpts = {
 	debug: true
 };
 
-gulp.task('browserify', function () {
-	var bundler = browserify('./src/js/index.js');
+var bundleOpts = assign({}, watchify.args, customBundleOpts);
+var browserifyBundler = browserify(bundleOpts)
+.transform(babel.configure({
+	// Use all of the ES2015 spec
+	presets: ['es2015']
+}));
 
-	return bundler.bundle()
+gulp.task('browserify', function () {
+	return browserifyBundler.bundle()
 		.on('error', gutil.log.bind(gutil, 'Browserify Error'))
 		.pipe(source('bundle.js'))
 		.pipe(buffer())
@@ -34,8 +40,8 @@ gulp.task('browserify', function () {
 });
 
 gulp.task('watchify', function() {
-	var bundleOpts = assign({}, watchify.args, customBundleOpts);
-	var bundler = watchify(browserify(bundleOpts));
+
+	var bundler = watchify(browserifyBundler);
 
 	bundler.on('update', bundle);
 	bundler.on('log', gutil.log);

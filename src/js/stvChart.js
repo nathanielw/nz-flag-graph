@@ -60,7 +60,7 @@ function stvChart() {
 
 			var xAcummulated = 0;
 
-			// Add geometry data to each candidate in this count/round
+			// Add geometry and other data to each candidate in this count/round
 			count.totals.forEach(function(k, v) {
 				v.geo = {
 					y: y,
@@ -69,6 +69,9 @@ function stvChart() {
 					x: xScale(xAcummulated),
 					dx: xScale(v.votes)
 				}
+
+				v.flowsIncoming = [];
+				v.flowsOutgoing = [];
 
 				xAcummulated += v.votes;
 			});
@@ -93,9 +96,11 @@ function stvChart() {
 					var prevTotal = prevCount.totals.get(k);
 					var newVotes = v.votes - prevTotal.votes;
 
+					// add a flow from the same flag in the previous count to this one
 					flows.push(new Flow(prevTotal.votes, xScale, 0, 0, prevTotal, v));
 
 					if (newVotes > 0) {
+						// If votes were gained, add a flow from the eliminated flag to this one
 						flows.push(new Flow(newVotes, xScale, prevTotal.votes, elimVoteOffset, eliminated, v));
 						elimVoteOffset += newVotes;
 					}
@@ -118,6 +123,9 @@ function stvChart() {
 			x1: to.geo.x + (width / 2) + xScale(fromVoteOffset),
 			width: width
 		}
+
+		from.flowsOutgoing.push(this);
+		to.flowsIncoming.push(this);
 	}
 
 	return chart;

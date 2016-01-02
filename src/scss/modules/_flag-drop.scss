@@ -87,6 +87,7 @@ $el: '.flag-drop';
 		text-align: center;
 		float: left;
 		flex-grow: 1;
+		flex-basis: 0;
 
 		&--ghost {
 			opacity: 0.3;

@@ -4,49 +4,49 @@
 			"key" : "fb",
 			"name" : "Silver Fern (Black, White and Blue)",
 			"img" : "fern-bb.png",
-			"color" : "#4ecdc4",
+			"color" : "#3d9ed5",
 			"pickable" : true
 		},
 		 {
 			"key" : "fr",
 			"name" : "Silver Fern (Red, White and Blue) ",
 			"img" : "fern-rb.png",
-			"color" : "#ffb56b",
+			"color" : "#740c8b",
 			"pickable" : true
 		},
 		 {
 			"key" : "rp",
 			"name" : "Red Peak",
 			"img" : "red-peak.png",
-			"color" : "#ff6b6b",
+			"color" : "#DF005B",
 			"pickable" : true
 		},
 		 {
 			"key" : "bw",
 			"name" : "Silver Fern (Black and White)",
 			"img" : "fern-bw.png",
-			"color" : "#556270",
+			"color" : "#feb700",
 			"pickable" : true
 		},
 		 {
 			"key" : "kr",
 			"name" : "Koru",
 			"img" : "koru.png",
-			"color" : "#c4ec6c",
+			"color" : "#a2cc16",
 			"pickable" : true
 		},
 		 {
 			"key" : "inf",
 			"name" : "Informal Votes",
 			"img" : "",
-			"color" : "#999999",
+			"color" : "#dddddd",
 			"pickable" : false
 		},
 		 {
 			"key" : "inv",
 			"name" : "Invalid Votes",
 			"img" : "",
-			"color" : "#dddddd",
+			"color" : "#eeeeee",
 			"pickable" : false
 		},
 		 {
