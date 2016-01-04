@@ -1,4 +1,6 @@
-exports.ready = function(fn) {
+export { ready };
+
+function ready(fn) {
 	if (document.readyState != 'loading'){
 		fn();
 	} else {

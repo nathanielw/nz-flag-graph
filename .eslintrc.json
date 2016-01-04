@@ -15,5 +15,8 @@
         "indent": [2,"tab"],
         "no-trailing-spaces": [2,{"skipBlankLines":true}],
         "quotes": [2,"single"]
+    },
+    "ecmaFeatures": {
+        "modules": true
     }
 }

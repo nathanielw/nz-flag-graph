@@ -1,6 +1,6 @@
-module.exports = stvChart;
+export default stvChart;
 
-var d3 = require('d3');
+import d3 from 'd3';
 
 function stvChart() {
 	var height = 800,
@@ -54,6 +54,8 @@ function stvChart() {
 	}
 
 	function computeNodeGeometry(yScale, xScale) {
+		flows = [];
+
 		counts.forEach(function(count, i) {
 			var y = yScale(count.name);
 			var dy = yScale.rangeBand(count.name);
@@ -97,11 +99,11 @@ function stvChart() {
 					var newVotes = v.votes - prevTotal.votes;
 
 					// add a flow from the same flag in the previous count to this one
-					flows.push(new Flow(prevTotal.votes, xScale, 0, 0, prevTotal, v));
+					flows.push(new Flow(prevTotal.votes, xScale, 0, 0, prevTotal, v, i));
 
 					if (newVotes > 0) {
 						// If votes were gained, add a flow from the eliminated flag to this one
-						flows.push(new Flow(newVotes, xScale, prevTotal.votes, elimVoteOffset, eliminated, v));
+						flows.push(new Flow(newVotes, xScale, prevTotal.votes, elimVoteOffset, eliminated, v, i));
 						elimVoteOffset += newVotes;
 					}
 				});
@@ -109,12 +111,13 @@ function stvChart() {
 		});
 	}
 
-	function Flow(votes, xScale, fromVoteOffset, toVoteOffset,  from, to) {
+	function Flow(votes, xScale, fromVoteOffset, toVoteOffset,  from, to, fromRound) {
 		var width = xScale(votes);
 
 		this.from = from;
 		this.to = to;
 		this.votes = votes;
+		this.id = fromRound + '_' + from.key + '_' + to.key;
 
 		this.geo = {
 			y0: from.geo.y + from.geo.dy,
