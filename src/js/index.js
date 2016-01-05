@@ -3,11 +3,12 @@ import Sortable from 'sortablejs';
 import flagData from './data.json';
 import Chart from './chart';
 import * as util from './util';
+import assign from 'lodash.assign';
 
 util.ready(function() {
 	tidyData(flagData);
-	createDnD(flagData.choices.values().filter(function(d){ return d.pickable; }));
-	createChart(flagData.counts);
+	let chart = createChart(flagData.counts);
+	createDnD(flagData.choices.values().filter(function(d){ return d.pickable; }), chart);
 });
 
 function tidyData(data) {
@@ -22,7 +23,7 @@ function tidyData(data) {
 	});
 }
 
-function createDnD(choices) {
+function createDnD(choices, chart) {
 	var flagsUnorderedEl = document.getElementById('flags-unordered');
 	var flagsOrderedEl = document.getElementById('flags-ordered');
 
@@ -30,7 +31,8 @@ function createDnD(choices) {
 		.data(choices)
 		.enter()
 		.append('div')
-		.attr('class', 'flag-drop__flag');
+		.attr('class', 'flag-drop__flag')
+		.attr('data-id', d => d.key);
 
 	flagEls.append('div')
 		.attr('class', 'flag-drop__flag-img')
@@ -42,8 +44,10 @@ function createDnD(choices) {
 		.text(function(d) { return d.name });
 
 	var sortableOpts = { group: 'flags', animation: 200, ghostClass: 'flag-drop__flag--ghost', handle: '.flag-drop__flag-img', forceFallback: true, fallbackClass: 'flag-drop__flag--moving' }
-	Sortable.create(flagsUnorderedEl, sortableOpts);
-	Sortable.create(flagsOrderedEl, sortableOpts);
+	Sortable.create(flagsUnorderedEl, assign({}, sortableOpts, { sort: false }));
+	var flagsOrdered = Sortable.create(flagsOrderedEl, assign({}, sortableOpts, { onSort: () => {
+		chart.updateRanking(flagsOrdered.toArray());
+	}}));
 }
 
 function createChart(counts) {
@@ -64,13 +68,6 @@ function createChart(counts) {
 			}, 100);
 		}
 	});
-}
 
-function updateRanking(ranking) {
-	/*
-	go through each round/count
-		if rank[0] is in the count, highlight it
-		if not, remove it from the ranking
-		repeat (until valid 1st choice is found or no rankings remain)
-	 */
+	return chart;
 }

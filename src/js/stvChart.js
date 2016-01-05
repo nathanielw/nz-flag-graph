@@ -88,6 +88,7 @@ function stvChart() {
 					// Figure out which candidate has been removed since the previous count
 					if (!count.totals.has(prevCountKeys[j])) {
 						eliminated = prevCount.totals.get(prevCountKeys[j]);
+						eliminated.eliminated = true;
 						break;
 					}
 				}

@@ -5,6 +5,7 @@ import stvChart from './stvChart';
 d3tip(d3);
 
 const numberFormatter = d3.format(',');
+const TRANSITION_SPEED = 250;
 
 module.exports = class Chart {
 	/**
@@ -15,8 +16,10 @@ module.exports = class Chart {
 	constructor(chartContainer, counts) {
 		this.chartContainer = chartContainer;
 		this.counts = counts;
+		this.ranking = [];
+		this.highlightRanking = false;
 		this.margin = {top: 0, right: 0, bottom: 0, left: 0};
-		this.width = parseInt(chartContainer.style('width')) - this.margin.left - this.margin.right;
+		this.width = 0;
 		this.height = 920 - this.margin.top - this.margin.bottom;
 
 		this.flagTip = d3.tip()
@@ -81,16 +84,21 @@ module.exports = class Chart {
 	 * @param {?number} transitionSpeed Duration of the transition to the new layout
 	 */
 	render(transitionSpeed=0) {
-		this.width = parseInt(this.chartContainer.style('width')) - this.margin.left - this.margin.right;
+		let newWidth = parseInt(this.chartContainer.style('width')) - this.margin.left - this.margin.right;
 
-		this.chartElement.attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
+		// re-calc the graph layout only if the size has changed
+		if (this.width !== newWidth) {
+			this.width = newWidth;
 
-		this.svg.attr('width', this.width + this.margin.left + this.margin.right)
-			.attr('height', this.height + this.margin.top + this.margin.bottom);
+			this.chartElement.attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
 
-		this.presenter
-			.width(this.width)
-			.layout();
+			this.svg.attr('width', this.width + this.margin.left + this.margin.right)
+				.attr('height', this.height + this.margin.top + this.margin.bottom);
+
+			this.presenter
+				.width(this.width)
+				.layout();
+		}
 
 		let countGroups = this.chartElement.selectAll('.count')
 			.data(this.presenter.counts());
@@ -109,13 +117,15 @@ module.exports = class Chart {
 			.on('mouseout', this.flagTip.hide);
 
 		counts.transition()
+			.duration(transitionSpeed)
+			.ease('linear')
 			.attr('width', d => d.geo.dx)
 			.attr('height', d => d.geo.dy)
 			.attr('y', d => d.geo.y)
 			.attr('x', d => d.geo.x)
 			.attr('fill', d => d.data.color)
-			.duration(transitionSpeed)
-			.ease('linear');
+			.attr('opacity', (d) => ((!this.highlightRanking || d.votedFor) ? 1 : 0.5));
+
 
 		let flowsGroup = this.chartElement.select('.flows');
 
@@ -131,7 +141,14 @@ module.exports = class Chart {
 			.append('path')
 			.attr('class', 'flow');
 
-		flows.transition()
+		flows
+			.style('fill', 'none')
+			.sort(function(a, b) {
+				return (b.votes - a.votes)
+			})
+			.transition()
+			.duration(transitionSpeed)
+			.ease('linear')
 			.attr('d', d => {
 				let dist = d.geo.y1 - d.geo.y0;
 
@@ -141,14 +158,72 @@ module.exports = class Chart {
 					+ ' ' + d.geo.x1 + ',' + d.geo.y1;
 
 			})
-			.style('stroke', d => d.from.data.color)
+			.style('stroke', d =>  d.from.data.color)
 			.style('stroke-width', d => d.geo.width)
-			.style('opacity', '0.5')
-			.style('fill', 'none')
-			.sort((a, b) => b.votes - a.votes)
-			.duration(transitionSpeed)
-			.ease('linear');
+			.style('opacity', d => {
+				if (!this.highlightRanking) {
+					return 0.55;
+				}
+
+				if (d.from.votedFor && d.to.votedFor) {
+					return 0.7
+				} else {
+					return 0.2;
+				}
+			});
 
 		flows.exit().remove();
+	}
+
+	/**
+	 * Updates the ranking of choices displayed/highlighted within the chart
+	 * @param {array} ranking Array of keys/ids for the ranking, ordered from first choice down.
+	 */
+	updateRanking(ranking) {
+		if (ranking.length === 0) {
+			this.highlightRanking = false;
+		} else {
+			this.highlightRanking = true;
+		}
+
+		this.counts.forEach(count => {
+			let eliminatedKey;
+
+			count.totals.forEach((k,v) => {
+				if (v.key === ranking[0]) {
+					v.votedFor = true;
+				} else {
+					v.votedFor = false;
+				}
+
+				if (v.eliminated) {
+					eliminatedKey = v.key;
+				}
+			});
+
+			// remove the eliminated choice from the ranking
+
+			let i = ranking.indexOf(eliminatedKey);
+
+			if (i >= 0) {
+				ranking.splice(i, 1);
+
+				// Mark the vote as 'Non-transferable' if there are no rankings remaining
+				if (ranking.length === 0) {
+					ranking.push('nt');
+				}
+			}
+		});
+
+		this.render(TRANSITION_SPEED);
+	}
+
+	/**
+	 * Sets whether the chart should highlight the ranking of the choices (as given to updateRanking)
+	 * @param {boolean} highlight true to highlight the ranking, false otherwise.
+	 */
+	setHighlightRanking(highlight) {
+		this.highlightRanking = highlight;
+		this.render(TRANSITION_SPEED);
 	}
 }

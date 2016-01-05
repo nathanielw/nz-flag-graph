@@ -24,6 +24,7 @@ $img-width: 64px;
 		margin-left: -10px;
 		border: 10px solid transparent;
 		border-top-color: $bg;
+		pointer-events: none;
 	}
 
 	&__header {
