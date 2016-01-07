@@ -63,7 +63,7 @@ function createChart(counts) {
 			clearTimeout(resizeTimer);
 
 			// Debouncing the resizing
-			resizeTimer = setTimeout(function() {
+			resizeTimer = setTimeout(() => {
 				chart.render(250);
 			}, 100);
 		}

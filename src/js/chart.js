@@ -64,6 +64,24 @@ module.exports = class Chart {
 				return html;
 			});
 
+		const checkId = 'highlight-checkbox';
+
+		let checkContainer = chartContainer.append('span')
+			.attr('class', 'graph-controls');
+
+		this.highlightCheckbox = checkContainer.append('input')
+			.attr('type', 'checkbox')
+			.attr('class', 'custom-checkbox')
+			.attr('id', checkId)
+			.on('click', () => {
+				this.setHighlightRanking(this.highlightCheckbox.property('checked'));
+			});
+
+		checkContainer.append('label')
+			.attr('class', 'custom-checkbox__label')
+			.text('Highlight my vote')
+			.attr('for', checkId);
+
 		this.svg = chartContainer.append('svg');
 		this.chartElement = this.svg.append('g');
 
@@ -84,13 +102,27 @@ module.exports = class Chart {
 	 * @param {?number} transitionSpeed Duration of the transition to the new layout
 	 */
 	render(transitionSpeed=0) {
-		let newWidth = parseInt(this.chartContainer.style('width')) - this.margin.left - this.margin.right;
+		let containerWidth = parseInt(this.chartContainer.style('width'));
+
+		if (containerWidth < 580) {
+			this.margin.left = 0;
+		} else {
+			this.margin.left = 80;
+		}
+
+		let newWidth = containerWidth - this.margin.left - this.margin.right;
+
+		let transition = function(selection) {
+			return selection.transition()
+				.duration(transitionSpeed)
+				.ease('linear');
+		}
 
 		// re-calc the graph layout only if the size has changed
 		if (this.width !== newWidth) {
 			this.width = newWidth;
 
-			this.chartElement.attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
+			transition(this.chartElement).attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
 
 			this.svg.attr('width', this.width + this.margin.left + this.margin.right)
 				.attr('height', this.height + this.margin.top + this.margin.bottom);
@@ -99,6 +131,18 @@ module.exports = class Chart {
 				.width(this.width)
 				.layout();
 		}
+
+		let yAxis = this.chartElement.select('g.axis--y');
+
+		if (yAxis.empty()) {
+			yAxis = this.chartElement.append('g')
+				.attr('class', 'axis axis--y');
+		}
+
+		transition(yAxis).call(
+			this.presenter.yAxis()
+				.tickSize(0, 0)
+				.tickPadding(15));
 
 		let countGroups = this.chartElement.selectAll('.count')
 			.data(this.presenter.counts());
@@ -116,9 +160,7 @@ module.exports = class Chart {
 			.on('mouseover', this.flagTip.show)
 			.on('mouseout', this.flagTip.hide);
 
-		counts.transition()
-			.duration(transitionSpeed)
-			.ease('linear')
+		transition(counts)
 			.attr('width', d => d.geo.dx)
 			.attr('height', d => d.geo.dy)
 			.attr('y', d => d.geo.y)
@@ -141,14 +183,11 @@ module.exports = class Chart {
 			.append('path')
 			.attr('class', 'flow');
 
-		flows
+		transition(flows
 			.style('fill', 'none')
 			.sort(function(a, b) {
 				return (b.votes - a.votes)
-			})
-			.transition()
-			.duration(transitionSpeed)
-			.ease('linear')
+			}))
 			.attr('d', d => {
 				let dist = d.geo.y1 - d.geo.y0;
 
@@ -181,9 +220,9 @@ module.exports = class Chart {
 	 */
 	updateRanking(ranking) {
 		if (ranking.length === 0) {
-			this.highlightRanking = false;
-		} else {
-			this.highlightRanking = true;
+			this.setHighlightRanking(false);
+		} else if (!this.highlightRanking) {
+			this.setHighlightRanking(true);
 		}
 
 		this.counts.forEach(count => {
@@ -224,6 +263,7 @@ module.exports = class Chart {
 	 */
 	setHighlightRanking(highlight) {
 		this.highlightRanking = highlight;
+		this.highlightCheckbox.property('checked', highlight);
 		this.render(TRANSITION_SPEED);
 	}
 }

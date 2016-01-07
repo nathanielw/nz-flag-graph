@@ -7,7 +7,8 @@ function stvChart() {
 		width = 600,
 		nodeSizeRatio = 0.2,
 		counts = [],
-		flows = [];
+		flows = [],
+		yAxis;
 
 	function chart() {}
 
@@ -39,6 +40,10 @@ function stvChart() {
 		return flows;
 	}
 
+	chart.yAxis = function() {
+		return yAxis;
+	}
+
 	chart.layout = function() {
 		var yScale = d3.scale.ordinal()
 			.domain(counts.map(function(d) { return d.name }))
@@ -47,6 +52,10 @@ function stvChart() {
 		var xScale = d3.scale.linear()
 			.domain([0, d3.sum(counts[0].totals.values(), function(d) { return d.votes })])
 			.range([0, width]);
+
+		yAxis = d3.svg.axis()
+			.orient('left')
+			.scale(yScale);
 
 		computeNodeGeometry(yScale, xScale);
 

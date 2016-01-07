@@ -17,7 +17,7 @@
 					<span class="heading__sub">Interactive Graph</span>
 				</h1>
 			</div>
-			<a href="https://github.com/nathanielw" title="Page source on Github">
+			<a href="https://github.com/nathanielw/nz-flag-graph" title="Page source on Github">
 				<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 250 250" style="position:absolute;top:0;right:0"><path d="M0 0l115.002 115.002h5l6.792-6.793C113.406 99.424 119 90 119 90c3-7 2.002-11.004 2.002-11.004-1-7 2.997-1.996 2.997-1.996 4 5 2 10.998 2 10.998-2.387 7.96 2.18 12.71 6.166 14.838l1.837-1.837c3-2 5.995-3.002 7.995-3.002C133.998 86.998 127 74 144 57c5-5 9.998-7 15.998-7 1-2 3-7 12-11 0 0 5 3 7 16 4 2 8 5 12 9S198 72 200 76c14 3 16.998 7.002 16.998 7.002C212.998 91.002 208 94 206 94c0 6-2 10.998-7 15.998C183 125.998 169 120 158 112c0 3-1 6.998-5 10.998l-12.005 11.005c-1 1 1 4.998 1 4.998l-2.202-1.958 2.203 4.956L250 250V0H0z" fill="#fff"/></svg>
 			</a>
 		</header>
@@ -25,7 +25,7 @@
 		<div class="content">
 			<div class="panel flag-drop">
 				<div class="flag-drop__ordered">
-					<div class="flag-drop__ordered-inner" id="flags-ordered"></div>
+					<div class="flag-drop__inner flag-drop__inner--ordered" id="flags-ordered"></div>
 					<div class="flag-drop__caption">
 						<h2 class="heading">
 							Drag flags here
@@ -35,7 +35,13 @@
 						</p>
 					</div>
 				</div>
-				<div class="flag-drop__unordered" id="flags-unordered">
+				<div class="flag-drop__unordered">
+					<div class="flag-drop__inner flag-drop__inner--unordered" id="flags-unordered"></div>
+					<div class="flag-drop__caption">
+						<p class="heading heading--3">
+							Drag flags here to remove them from your ranking
+						</p>
+					</div>
 				</div>
 			</div>
 			<div class="panel">

@@ -1,0 +1,52 @@
+@import '../core/_variables';
+
+.custom-checkbox {
+	$size: 16px;
+
+	opacity: 0;
+	width: 0;
+	pointer-events: none;
+	position: absolute;
+
+	&__label {
+		position: relative;
+		padding-left: 20px;
+
+		&:before {
+			content: '';
+			display: block;
+			box-sizing: border-box;
+			width: $size;
+			height: $size;
+			position: absolute;
+			left: 0;
+			top: 50%;
+			margin-top: -$size/2;
+			background: transparent;
+			border: 2px solid $col-grey-dark;
+			border-radius: 2px;
+		}
+	}
+
+	&:checked + &__label {
+		&:before {
+			border: none;
+			background: $col-primary url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="#{$size - 4px}" height="#{$size - 4px}" viewBox="0 0 8 8"><path d="M1 4l2 2 4-4" fill="none" stroke="white"/></svg>');
+			background-repeat: no-repeat;
+			background-position: 2px 2px;
+		}
+	}
+
+	&:focus + &__label {
+		&:before {
+			box-shadow: 0 0 4px transparentize($col-primary, 0);
+			border-color: $col-primary;
+		}
+	}
+
+	&:focus:checked + &__label {
+		&:before {
+			border: none;
+		}
+	}
+}

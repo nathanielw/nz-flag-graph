@@ -9,14 +9,33 @@ $el: '.flag-drop';
 }
 
 .flag-drop {
-	&__ordered {
+	margin-bottom: -$margin/2;
+
+	&__ordered,
+	&__unordered {
 		position: relative;
 	}
 
-	&__ordered-inner {
+	&__inner {
 		height: 100%;
 		width: 100%;
-		border: 3px dashed $col-grey-light;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-around;
+		min-height: 145px;
+		padding: $margin;
+
+		&--ordered {
+			border: 3px dashed $col-grey-light;
+
+			@for $i from 1 through 5 {
+				#{$el}__flag:nth-child(#{$i}):not(#{$el}__flag--moving) {
+					@include placing($i);
+				}
+			}
+		}
 
 		&:empty + #{$el}__caption {
 			z-index: -1;
@@ -26,34 +45,27 @@ $el: '.flag-drop';
 			display: none;
 		}
 
+		#{$el}__flag {
+			// TODO: move this to the mixin. Issue #1805 in libsass needs to be fixed first
 
-			@for $i from 1 through 5 {
-				#{$el}__flag:nth-child(#{$i}):not(#{$el}__flag--moving) {
-					@include placing($i);
-				}
+			position: relative;
+
+			&:before {
+				display: block;
+				position: absolute;
+				width: 30px;
+				height: 30px;
+				left: 50%;
+				margin-left: 15px;
+				font-weight: 900;
+				line-height: 1.8;
+				text-align: center;
+				color: white;
+				background: $col-header-1;
+				box-shadow: 0 2px 4px rgba(black, 0.2);
+				border-radius: 100%;
 			}
-
-			#{$el}__flag {
-				// TODO: move this to the mixin. Issue #1805 in libsass needs to be fixed first
-
-				position: relative;
-
-				&:before {
-					display: block;
-					position: absolute;
-					width: 30px;
-					height: 30px;
-					left: 50%;
-					margin-left: 15px;
-					font-weight: 900;
-					line-height: 1.8;
-					text-align: center;
-					color: white;
-					background: $col-header-1;
-					box-shadow: 0 2px 4px rgba(black, 0.2);
-					border-radius: 100%;
-				}
-			}
+		}
 	}
 
 	&__caption {
@@ -68,17 +80,6 @@ $el: '.flag-drop';
 		p {
 			margin: 0;
 		}
-	}
-
-	&__unordered,
-	&__ordered-inner {
-		box-sizing: border-box;
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: space-around;
-		min-height: 145px;
-		padding: $margin;
 	}
 
 	&__flag {

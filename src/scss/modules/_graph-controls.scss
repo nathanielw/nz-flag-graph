@@ -1,0 +1,11 @@
+//
+// One-off styles/elements
+//
+
+@import '../core/variables';
+
+.graph-controls {
+	float: right;
+	margin-bottom: $margin/2;
+	color: $col-grey-dark;
+}
