@@ -6,9 +6,13 @@ $col-header-2: #dbe4ec;
 $col-grey-light: #cfcfcf;
 $col-grey-lightest: #e3e3e3;
 $col-grey-dark: #757575;
+$col-grey-darkest: #333333;
 
 // Breakpoints
 $break-s: 640px;
 
 // Sizes
 $margin: 40px;
+
+$font-size-base: 16px;
+$font-size-small: 0.9 * $font-size-base;

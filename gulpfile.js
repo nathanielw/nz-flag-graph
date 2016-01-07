@@ -78,11 +78,16 @@ gulp.task('resources', function() {
 	.pipe(gulp.dest(opts.dest + '/resources'));
 });
 
+gulp.task('favicon', function() {
+	return gulp.src('src/favicon/*.@(ico|png)')
+	.pipe(gulp.dest(opts.dest));
+});
+
 gulp.task('clean', function() {
 	del.sync(opts.dest + '/**/*');
 });
 
-gulp.task('serve', ['watchify', 'css'], function () {
+gulp.task('serve', ['watchify', 'css', 'favicon'], function () {
 	browserSync.init({
 		open: false,
 		server: ['./src', opts.dest]
@@ -92,4 +97,4 @@ gulp.task('serve', ['watchify', 'css'], function () {
 	gulp.watch('src/**/*.html', browserSync.reload);
 });
 
-gulp.task('build', ['browserify', 'html', 'css', 'resources']);
+gulp.task('build', ['browserify', 'html', 'css', 'resources', 'favicon']);

@@ -44,7 +44,7 @@ function createDnD(choices, chart) {
 		.text(function(d) { return d.name });
 
 	var sortableOpts = { group: 'flags', animation: 200, ghostClass: 'flag-drop__flag--ghost', handle: '.flag-drop__flag-img', forceFallback: true, fallbackClass: 'flag-drop__flag--moving' }
-	Sortable.create(flagsUnorderedEl, assign({}, sortableOpts, { sort: false }));
+	Sortable.create(flagsUnorderedEl, sortableOpts);
 	var flagsOrdered = Sortable.create(flagsOrderedEl, assign({}, sortableOpts, { onSort: () => {
 		chart.updateRanking(flagsOrdered.toArray());
 	}}));

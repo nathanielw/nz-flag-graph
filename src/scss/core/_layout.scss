@@ -2,6 +2,14 @@
 // Layout/grid/structuring
 //
 
+.page-wrap {
+	min-height: 100%;
+}
+
+html, body {
+	height: 100%;
+}
+
 .content {
 	width: 90%;
 	max-width: 1000px;
