@@ -13,6 +13,8 @@ var assign = require('lodash.assign')
 var sass = require('gulp-sass');
 var del = require('del');
 var uglify = require('gulp-uglify');
+var ghPages = require('gulp-gh-pages');
+var autoprefixer = require('gulp-autoprefixer');
 
 var opts = {
 	dest: './dist'
@@ -62,8 +64,12 @@ gulp.task('watchify', function() {
 
 gulp.task('css', function() {
 	return gulp.src('src/scss/*.scss')
-		.pipe(sass({includePaths: ['./node_modules/'] }))
+		.pipe(sass({includePaths: ['./node_modules/'], outputStyle: 'compressed' }))
 		.on('error', gutil.log.bind(gutil, 'Sass Error'))
+		.pipe(autoprefixer({
+			browsers: ['> 0.5% in NZ', 'last 2 versions'],
+			cascade: false
+		}))
 		.pipe(gulp.dest(opts.dest + '/css'))
 		.pipe(browserSync.reload({stream: true}));
 });
@@ -98,3 +104,8 @@ gulp.task('serve', ['watchify', 'css', 'favicon'], function () {
 });
 
 gulp.task('build', ['browserify', 'html', 'css', 'resources', 'favicon']);
+
+gulp.task('deploy', ['build'], function() {
+	return gulp.src('./dist/**/*')
+		.pipe(ghPages());
+});

@@ -33,7 +33,7 @@ module.exports = class Chart {
 							<h3 class="graph-tooltip__title"><span class="flag-dot" style="background:${d.data.color}"></span>${d.data.name}</h3>
 							<span class="graph-tooltip__subtitle">${numberFormatter(d.votes)} votes</span>
 						</div>
-						${d.data.img ? `<img src="/resources/img/flags/${d.data.img} " class="graph-tooltip__img" />` : ''}
+						${d.data.img ? `<img src="./resources/img/flags/${d.data.img} " class="graph-tooltip__img" />` : ''}
 					</div>
 
 					${function() {
