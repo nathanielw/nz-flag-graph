@@ -11,7 +11,7 @@
 			"key" : "fr",
 			"name" : "Silver Fern (Red, White and Blue) ",
 			"img" : "fern-rb.png",
-			"color" : "#740c8b",
+			"color" : "#5a108e",
 			"pickable" : true
 		},
 		 {
@@ -25,14 +25,14 @@
 			"key" : "bw",
 			"name" : "Silver Fern (Black and White)",
 			"img" : "fern-bw.png",
-			"color" : "#feb700",
+			"color" : "#ffcf00",
 			"pickable" : true
 		},
 		 {
 			"key" : "kr",
 			"name" : "Koru",
 			"img" : "koru.png",
-			"color" : "#a2cc16",
+			"color" : "#6bbd22",
 			"pickable" : true
 		},
 		 {
